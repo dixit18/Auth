@@ -6,7 +6,7 @@ import authRoutes from './routes/auth';
 import healthRoutes from './routes/health';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import '../src/jobs/activateUsers'
+import './jobs/activateUsers'
 
 dotenv.config();
 
