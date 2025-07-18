@@ -6,6 +6,7 @@ import authRoutes from './routes/auth';
 import healthRoutes from './routes/health';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import path from 'path';
 import './jobs/activateUsers'
 
 dotenv.config();
@@ -32,6 +33,11 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/', healthRoutes);
 
+const isProd = process.env.NODE_ENV === 'production';
+const routesGlob = isProd
+  ? path.join(__dirname, 'routes', '*.js')
+  : path.join(__dirname, 'routes', '*.ts');
+
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -50,7 +56,7 @@ const swaggerOptions = {
     },
     security: [{ bearerAuth: [] }],
   },
-  apis: ['./src/routes/*.ts'],
+  apis: [routesGlob],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
